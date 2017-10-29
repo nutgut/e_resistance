@@ -4,54 +4,53 @@
 
 int e_resistance(float orig_resistance, float *res_array )
 {
+int ans=0;
 int count=0;
-int e12[12]={10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82};
-int len=12;
-int resistance;
-//float res_array[3]={0.0, 0.0, 0.0};
+int e12[36]={10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82}; 
+int len=sizeof(e12)/sizeof(int);
 
+for (int i=0; i< len-12; i++){
 
-printf("Type resistance (2 digits):");
-scanf("%d", &resistance);
-
-if (resistance>=100 && resistance<=9)
-{
-	printf("Wrong input format. Input an integer between 10 and 99.");
+	e12[i+12]=e12[i]*10;
+	
 }
-else
-{
+
+res_array[0]=0;
+res_array[1]=0;
+res_array[2]=0;
+
 	for (int i=len-1; i>=0; i--)
 	{
 		for (int j=len-1; j>=0; j--)
 		{
 			for (int k=len-1; k>=0; k--)
 			{
-				if (resistance-e12[i]==0)
+				if (orig_resistance-e12[i]==0)
 				{
 					res_array[0]=e12[i];
 					res_array[1]=0;
 					res_array[2]=0;
-					return 1;
+					ans=1;
 					i,j,k=-1;
 				}
-				else if (resistance-e12[i]-e12[j]==0)
+				else if (orig_resistance-e12[i]-e12[j]==0)
 				{
 		                        res_array[0]=e12[i];
 			                res_array[1]=e12[j];
 					res_array[2]=0;
-					return 2;
+					ans=2;
 					i,j,k=-1;		
 				}
-				else if (resistance-e12[i]-e12[j]-e12[k]==0)
+				else if (orig_resistance-e12[i]-e12[j]-e12[k]==0)
 				{
                                         res_array[0]=e12[i];
                                         res_array[1]=e12[j];
                                         res_array[2]=e12[k];
-					return 3;
+					ans=3;
 					i,j,k=-1;
 				}
 			}
 		}
 	}
-}
+return ans;
 }
